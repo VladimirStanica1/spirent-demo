@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: bird-app
+  datasource:
+    url: jdbc:mysql://localhost:3306/db
+    username: user
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        hbm2ddl:
+          auto: update
+  liquibase:
+    enabled: true
+    change-log: db/changelog/bootstrap.xml
+    url: jdbc:mysql://mysql:3306/db
+    user: user
+    password: password
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
