@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: sighting.SightingServiceTest
--------------------------------------------------------------------------------
-Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.708 s -- in sighting.SightingServiceTest
