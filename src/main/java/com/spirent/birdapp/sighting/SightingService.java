@@ -43,7 +43,7 @@ public class SightingService {
 
     @Transactional
     public Optional<SightingDto> addSighting(CreateSightingDto sightingDto) {
-        var bird = birdRepository.findByName(sightingDto.getBirdName())
+        var bird = birdRepository.findById(sightingDto.getBirdId())
                 .orElseGet(() -> birdRepository.save(Bird.builder()
                         .name(sightingDto.getBirdName()).build()));
 

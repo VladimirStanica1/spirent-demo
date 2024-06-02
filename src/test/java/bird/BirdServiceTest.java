@@ -6,6 +6,8 @@ import com.spirent.birdapp.bird.BirdRepository;
 import com.spirent.birdapp.bird.BirdService;
 import com.spirent.birdapp.bird.CreateBirdDto;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -61,31 +63,32 @@ public class BirdServiceTest {
     }
 
     @Test
-    public void getAllBirds_whenBirdsExist_returnsListOfBirds() {
-        when(birdRepository.findAll()).thenReturn(Arrays.asList(bird));
+    void getBirds_whenNoBirdsExist_returnsEmptyOptional() {
+        // Given
+        when(birdRepository.findAllBirds(null, null)).thenReturn(Collections.emptyList());
 
-        var result = birdService.getAllBirds();
+        // When
+        Optional<List<BirdDto>> result = birdService.getBirds(null, null);
 
-        assertEquals(1, result.size());
-        assertEquals(birdDto, result.get(0));
+        // Then
+        assertEquals(Optional.empty(), result);
     }
 
     @Test
-    public void getByColor_whenBirdWithColorExists_returnsBird() {
-        when(birdRepository.findByColor("Grey")).thenReturn(Optional.of(bird));
+    void getBirds_whenBirdsExist_returnsOptionalWithListOfBirds() {
+        // Given
+        Bird bird = new Bird();
+        bird.setName("Sparrow");
+        bird.setColor("Grey");
+        when(birdRepository.findAllBirds(null, null)).thenReturn(Collections.singletonList(bird));
 
-        var result = birdService.getByColor("Grey");
+        // When
+        Optional<List<BirdDto>> result = birdService.getBirds(null, null);
 
-        assertEquals(Optional.of(birdDto), result);
-    }
-
-    @Test
-    public void getByName_whenBirdWithNameExists_returnsBird() {
-        when(birdRepository.findByName("Sparrow")).thenReturn(Optional.of(bird));
-
-        var result = birdService.getByName("Sparrow");
-
-        assertEquals(Optional.of(birdDto), result);
+        // Then
+        assertEquals(1, result.get().size());
+        assertEquals("Sparrow", result.get().get(0).getName());
+        assertEquals("Grey", result.get().get(0).getColor());
     }
 
     @Test

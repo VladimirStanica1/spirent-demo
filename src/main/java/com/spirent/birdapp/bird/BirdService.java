@@ -14,20 +14,15 @@ import static java.util.stream.Collectors.toList;
 public class BirdService {
     private final BirdRepository birdRepository;
 
-    public List<BirdDto> getAllBirds() {
-        return birdRepository.findAll().stream()
+    public Optional<List<BirdDto>> getBirds(String name, String color) {
+
+        var allBirds = birdRepository.findAllBirds(name, color);
+        if (allBirds.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(allBirds.stream()
                 .map(this::fromEntity)
-                .collect(toList());
-    }
-
-    public Optional<BirdDto> getByColor(String color) {
-        return birdRepository.findByColor(color)
-                .map(this::fromEntity);
-    }
-
-    public Optional<BirdDto> getByName(String name) {
-        return birdRepository.findByName(name)
-                .map(this::fromEntity);
+                .collect(toList()));
     }
 
     public Optional<BirdDto> addBird(CreateBirdDto bird) {

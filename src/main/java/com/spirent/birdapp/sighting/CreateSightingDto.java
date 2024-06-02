@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 public class CreateSightingDto {
+    private Long birdId;
     private String birdName;
     private String location;
     private LocalDateTime dateTime;

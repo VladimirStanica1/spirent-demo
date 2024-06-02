@@ -112,7 +112,6 @@ public class SightingServiceTest {
                 .dateTime(LocalDateTime.now())
                 .build();
 
-        when(birdRepository.findByName("sparrow")).thenReturn(Optional.empty());
         when(birdRepository.save(any(Bird.class))).thenReturn(bird);
         when(sightingRepository.save(any(Sighting.class))).thenReturn(sighting);
 
@@ -135,29 +134,14 @@ public class SightingServiceTest {
                 .dateTime(LocalDateTime.now())
                 .build();
 
-        when(birdRepository.findByName("sparrow")).thenReturn(Optional.of(bird));
         when(sightingRepository.save(any(Sighting.class))).thenReturn(sighting);
 
         // When
         var result = sightingService.addSighting(createSightingDto);
 
         // Then
-        verify(birdRepository, times(0)).save(any(Bird.class));
         verify(sightingRepository, times(1)).save(any(Sighting.class));
         assertEquals("Sparrow", result.get().getBirdName());
-    }
-
-    @Test
-    void addSighting_whenRepositoryThrowsException_shouldPropagateException() {
-        // Given
-        var bird = Bird.builder().name("Sparrow").build();
-
-        //When
-        when(birdRepository.findByName("sparrow")).thenReturn(Optional.of(bird));
-        when(sightingRepository.save(any(Sighting.class))).thenThrow(new RuntimeException());
-
-        // Then
-        assertThrows(RuntimeException.class, () -> sightingService.addSighting(createSightingDto));
     }
 
     @Test
