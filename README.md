@@ -1,4 +1,8 @@
 To start the application on your local machine, run the following commands in your terminal:
+- clone the repo https://github.com/VladimirStanica1/spirent-demo.git
+- run mvn install to generate the 'target' folder
+
+Run the following commands :
 - docker build . 
 - docker compose up
 
