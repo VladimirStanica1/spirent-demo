@@ -1,0 +1,4 @@
+#Can't use Liquibase in test environment because we need fresh data for each test case
+spring:
+  liquibase:
+    enabled: false
